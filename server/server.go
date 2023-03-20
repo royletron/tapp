@@ -10,6 +10,7 @@ type Server struct {
 	Db 	 *database.Database
 }
 
+// Sets up all of the routes
 func (s Server) SetupRoutes() {
 	apiRouter := chi.NewRouter()
 	schoolHandler := SchoolHandler{
@@ -19,6 +20,7 @@ func (s Server) SetupRoutes() {
 	s.Router.Mount("/api", apiRouter)
 }
 
+// Creates a default server with no data
 func CreateNewServer() *Server {
 	s := &Server{}
 	s.Router = chi.NewRouter()
@@ -27,6 +29,7 @@ func CreateNewServer() *Server {
 	return s
 }
 
+// Creates a server with fake schools provided as a string slice
 func CreateServerWithFakeSchools(names []string) *Server {
 	s := CreateNewServer()
 	for _, name := range names {

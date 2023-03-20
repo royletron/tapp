@@ -4,7 +4,7 @@ type Database struct {
 	Schools *SchoolCollection
 }
 
-// default constructor
+// Creates a fake database
 func NewDatabase() *Database {
 	return &Database{
 		Schools: NewSchoolCollection(),

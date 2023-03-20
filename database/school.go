@@ -15,6 +15,7 @@ type SchoolCollection struct {
 	Schools []*School `json:"schools"`
 }
 
+// Creates an accessible 'model' for schools
 func NewSchoolCollection() *SchoolCollection {
 	return &SchoolCollection{
 		Schools: []*School{},
