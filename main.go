@@ -14,7 +14,7 @@ func main() {
   if fromEnv := os.Getenv("PORT"); fromEnv != "" {
     port = fromEnv
   }
-  server := server.CreateServerWithFakeSchools([]string{"St Richards", "St Albans", "Carswell Community", "St Mary's"})
+  server := server.CreateServerWithFakeSchools([]string{"St Richards", "St Albans", "Carswell Community", "St Mary's", "Abbey Hey", "St Tho", "John Motson Academy"})
 	fmt.Printf("Starting up on http://localhost:%s\n", port)
 	http.ListenAndServe(":" + port, server.Router)
 }
