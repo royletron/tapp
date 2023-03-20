@@ -10,10 +10,3 @@ func NewDatabase() *Database {
 		Schools: NewSchoolCollection(),
 	}
 }
-
-// constructor with data - for testing
-func NewDatabaseWithData(schools []*School) *Database {
-	return &Database{
-		Schools: NewSchoolCollectionWithData(schools),
-	}
-}
