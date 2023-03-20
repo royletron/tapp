@@ -1,4 +1,4 @@
-import SchoolForm from "components/SchoolForm";
+import CreateUpdateSchool from "containers/CreateUpdateSchool";
 import useSchools from "hooks/useSchools";
 import { useParams } from "react-router-dom";
 import NotFound from "./NotFound";
@@ -16,5 +16,5 @@ export default function UpdateSchool() {
   if (!school) {
     return <NotFound />;
   }
-  return <SchoolForm existingSchool={school} />;
+  return <CreateUpdateSchool existingSchool={school} />;
 }

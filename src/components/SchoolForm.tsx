@@ -1,72 +1,36 @@
-import useCreateSchool from "hooks/useCreateSchool";
 import classNames from "classnames";
-import { FormEvent, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { School } from "types/schools";
-import useUpdateSchool from "hooks/useUpdateSchool";
+import { FormEvent } from "react";
 
 /**
  * General purpose school form, can be used to create or update a school
- * @param existingSchool The school to update, if any
+ * @param onSubmit The function to call when the form is submitted
+ * @param title The title of the form
+ * @param name The name of the school
+ * @param setName The function to call when the name changes
+ * @param validationError The validation error, if any, to display
+ * @param isLoading Whether the form is loading
+ * @param submitText The text to display on the submit button
  */
 export default function SchoolForm({
-  existingSchool,
+  onSubmit,
+  title,
+  name,
+  setName,
+  validationError,
+  isLoading,
+  submitText,
 }: {
-  existingSchool?: School;
+  onSubmit: (evt: FormEvent) => Promise<void>;
+  title: string;
+  name: string;
+  setName: (name: string) => void;
+  validationError?: string | null;
+  isLoading: boolean;
+  submitText: string;
 }) {
-  // hooks
-  const { mutate: createSchool, isMutating: isCreateMutating } =
-    useCreateSchool();
-  const { mutate: updateSchool, isMutating: isUpdateMutation } =
-    useUpdateSchool();
-  const isMutating = isCreateMutating || isUpdateMutation;
-  const navigate = useNavigate();
-  const [name, setName] = useState(existingSchool?.name || "");
-  const [validationError, setValidationError] = useState<string | null>(null);
-
-  // callbacks
-  const onSubmit = async (evt: FormEvent) => {
-    evt.preventDefault();
-    if (name.length) {
-      try {
-        if (existingSchool) {
-          await updateSchool(existingSchool.id, name);
-          toast.success(`${name} has been updated`);
-        } else {
-          await createSchool(name);
-          toast.success(`${name} has been created`);
-        }
-        navigate("/");
-      } catch (error: any) {
-        toast.error(`Unable to create: ${error.message}`);
-      }
-    } else {
-      setValidationError("Please enter a school name");
-    }
-  };
-
-  // effects
-  useMemo(() => {
-    if (existingSchool) {
-      setName(existingSchool.name);
-    } else {
-      setName("");
-    }
-  }, [existingSchool]);
-  useMemo(() => {
-    if (validationError && name.length) {
-      setValidationError(null);
-    }
-  }, [name, validationError]);
-
   return (
     <form className="relative flex-1" onSubmit={onSubmit}>
-      <h2 className="text-lg mb-4">
-        {existingSchool
-          ? `Update ${existingSchool.name}`
-          : "Create a new school"}
-      </h2>
+      <h2 className="text-lg mb-4">{title}</h2>
       <div className="form-control w-full max-w-lg">
         <label className="label">
           <span className="label-text">School Name</span>
@@ -90,9 +54,9 @@ export default function SchoolForm({
       </div>
       <button
         type="submit"
-        className={classNames("btn btn-primary mt-4", isMutating && "loading")}
+        className={classNames("btn btn-primary mt-4", isLoading && "loading")}
       >
-        {existingSchool ? "Update" : "Create"}
+        {submitText}
       </button>
     </form>
   );

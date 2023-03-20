@@ -1,8 +1,8 @@
-import SchoolForm from "components/SchoolForm";
+import CreateUpdateSchool from "containers/CreateUpdateSchool";
 
 /**
  * Add a new school page
  */
 export default function NewSchool() {
-  return <SchoolForm />;
+  return <CreateUpdateSchool />;
 }
